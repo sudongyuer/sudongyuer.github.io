@@ -1,7 +1,7 @@
 module.exports = {
   title: "速冻鱼blog",
   description: "该网站用于记录前端知识总结",
-  dest: "./dist",
+  dest: "./docs",
   head: [
     // 在head标签中生成以下标签
     ["link", { rel: "icon", href: "/favicon.ico" }],
