@@ -52,20 +52,22 @@ module.exports = {
           {
             // 子菜单中的第一个导航按钮
             text: "GitHub",
-            link: "https://github.com/recoluan",
+            link: "https://github.com/sudongyuer",
             icon: "reco-github",
           },
         ],
       },
     ],
-    sidebar: {
-      "/blogs/daily/": [
-        // "", // 空字符串对应的是 README.md
-        "070602", // 对应 theme.md
-        // "plugin", // 对应plugin.md
-        // "api", // 对应api.md
-      ],
-    },
+    // sidebar: {
+    //   "/blogs/daily/": [
+    //     // "", // 空字符串对应的是 README.md
+    //     "070602", // 对应 theme.md
+    //     // "plugin", // 对应plugin.md
+    //     // "api", // 对应api.md
+    //   ],
+    // },
+    sidebar:'auto',
+    sidebarDepth:1,
     type: "blog",
     blogConfig: {
       category: {
