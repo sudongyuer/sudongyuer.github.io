@@ -17,6 +17,14 @@ module.exports = {
   ],
   theme: "reco",
   themeConfig: {
+    valineConfig: {     // valine 评论功能配置信息
+      appId: 'nnRjSw8Ki284jKsr2oqUENK7-gzGzoHsz',// your appId
+      appKey: 'G6wm8VDJRHyky5UhpNmi6t3y', // your appKey
+      placeholder: '尽情留下你想说的话吧~',           // 评论框占位符
+      avatar: 'wavatar',           // 评论用户的头像类型
+      highlight: true,         // 代码高亮
+      recordIP: true,         // 记录评论者的IP
+    },
     nav: [
       {
         // 第一个导航按钮
