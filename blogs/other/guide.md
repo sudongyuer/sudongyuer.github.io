@@ -5,6 +5,8 @@ tags:
  - tag1
 categories:
  -  other
+keys:
+ - '32acc702cc402ad0132ec864415e3992'
 ---
 
 ![vuepress](https://img.shields.io/badge/vuepress-0.14.8-brightgreen.svg)
