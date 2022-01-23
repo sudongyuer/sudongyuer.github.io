@@ -1,5 +1,5 @@
 {
-  "name": "",
+  "name": "sudongyu-blog",
   "version": "1.0.0",
   "author": "reco_luan",
   "scripts": {
@@ -8,8 +8,8 @@
   },
   "devDependencies": {
     "cz-conventional-changelog": "^3.3.0",
-    "vuepress": "1.8.2",
-    "vuepress-theme-reco": "1.6.6"
+    "vuepress": "^1.8.2",
+    "vuepress-theme-reco": "^1.6.6"
   },
   "description": "",
   "config": {
