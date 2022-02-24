@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>深入理解ES6中class的this指向问题 | 速冻鱼blog</title>
+    <meta name="generator" content="VuePress 1.9.7">
+    <link rel="icon" href="/favicon.ico">
+    <meta name="description" content="该网站用于记录前端知识总结">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="keywords" content="前端,js,css">
+    <meta name="author" content="速冻鱼">
+    
+    <link rel="preload" href="/assets/css/0.styles.cdd75a34.css" as="style"><link rel="preload" href="/assets/js/app.447fc903.js" as="script"><link rel="preload" href="/assets/js/3.f7c4414f.js" as="script"><link rel="preload" href="/assets/js/1.9beddc46.js" as="script"><link rel="preload" href="/assets/js/59.96197158.js" as="script"><link rel="prefetch" href="/assets/js/10.e6312e67.js"><link rel="prefetch" href="/assets/js/11.72afe211.js"><link rel="prefetch" href="/assets/js/12.1f6d1b36.js"><link rel="prefetch" href="/assets/js/13.7ab538d2.js"><link rel="prefetch" href="/assets/js/14.5d2ddb58.js"><link rel="prefetch" href="/assets/js/15.94e1a4c5.js"><link rel="prefetch" href="/assets/js/16.9bb3e285.js"><link rel="prefetch" href="/assets/js/17.115e1044.js"><link rel="prefetch" href="/assets/js/18.c6aa9726.js"><link rel="prefetch" href="/assets/js/19.808f3ade.js"><link rel="prefetch" href="/assets/js/20.98a5c143.js"><link rel="prefetch" href="/assets/js/21.29e5a3db.js"><link rel="prefetch" href="/assets/js/22.313ce4bc.js"><link rel="prefetch" href="/assets/js/23.907662dc.js"><link rel="prefetch" href="/assets/js/24.f777b16c.js"><link rel="prefetch" href="/assets/js/25.304da24c.js"><link rel="prefetch" href="/assets/js/26.a6dffdb1.js"><link rel="prefetch" href="/assets/js/27.4c9ff4ff.js"><link rel="prefetch" href="/assets/js/28.7a475fb3.js"><link rel="prefetch" href="/assets/js/29.c293f250.js"><link rel="prefetch" href="/assets/js/30.d5f0491e.js"><link rel="prefetch" href="/assets/js/31.7cbd5ae5.js"><link rel="prefetch" href="/assets/js/32.6ad7638c.js"><link rel="prefetch" href="/assets/js/33.b4b6bf63.js"><link rel="prefetch" href="/assets/js/34.d6697e20.js"><link rel="prefetch" href="/assets/js/35.7c1c24c7.js"><link rel="prefetch" href="/assets/js/36.e0b6bf46.js"><link rel="prefetch" href="/assets/js/37.bf1e009d.js"><link rel="prefetch" href="/assets/js/38.1af060de.js"><link rel="prefetch" href="/assets/js/39.ac68a271.js"><link rel="prefetch" href="/assets/js/4.d6490b0d.js"><link rel="prefetch" href="/assets/js/40.80b6b263.js"><link rel="prefetch" href="/assets/js/41.82912238.js"><link rel="prefetch" href="/assets/js/42.afe3f172.js"><link rel="prefetch" href="/assets/js/43.1ddb1329.js"><link rel="prefetch" href="/assets/js/44.cac9ae4e.js"><link rel="prefetch" href="/assets/js/45.1ef4f456.js"><link rel="prefetch" href="/assets/js/46.60dc4802.js"><link rel="prefetch" href="/assets/js/47.1653e28f.js"><link rel="prefetch" href="/assets/js/48.9651bab4.js"><link rel="prefetch" href="/assets/js/49.32da8127.js"><link rel="prefetch" href="/assets/js/5.5be2fbe6.js"><link rel="prefetch" href="/assets/js/50.d851eb0e.js"><link rel="prefetch" href="/assets/js/51.1f9d1abe.js"><link rel="prefetch" href="/assets/js/52.8e93ffa7.js"><link rel="prefetch" href="/assets/js/53.50f4f5d2.js"><link rel="prefetch" href="/assets/js/54.b8f1d4ba.js"><link rel="prefetch" href="/assets/js/55.87e2f061.js"><link rel="prefetch" href="/assets/js/56.2d7579dc.js"><link rel="prefetch" href="/assets/js/57.31777996.js"><link rel="prefetch" href="/assets/js/58.5f2bd60a.js"><link rel="prefetch" href="/assets/js/6.edbd7915.js"><link rel="prefetch" href="/assets/js/60.273e3764.js"><link rel="prefetch" href="/assets/js/61.e15fc932.js"><link rel="prefetch" href="/assets/js/62.17aef458.js"><link rel="prefetch" href="/assets/js/63.055fd59c.js"><link rel="prefetch" href="/assets/js/64.ee3c96ea.js"><link rel="prefetch" href="/assets/js/65.f9d5f00b.js"><link rel="prefetch" href="/assets/js/66.52e497bc.js"><link rel="prefetch" href="/assets/js/67.01608cef.js"><link rel="prefetch" href="/assets/js/68.6f778488.js"><link rel="prefetch" href="/assets/js/69.f9f16097.js"><link rel="prefetch" href="/assets/js/7.85e2725e.js"><link rel="prefetch" href="/assets/js/70.6e05b940.js"><link rel="prefetch" href="/assets/js/71.dc3d931a.js"><link rel="prefetch" href="/assets/js/72.7444103e.js"><link rel="prefetch" href="/assets/js/73.4060995a.js"><link rel="prefetch" href="/assets/js/74.281d6909.js"><link rel="prefetch" href="/assets/js/75.e2143a7c.js"><link rel="prefetch" href="/assets/js/76.2e76cc6d.js"><link rel="prefetch" href="/assets/js/8.83581dfc.js"><link rel="prefetch" href="/assets/js/9.d39e25dc.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.cdd75a34.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar" data-v-1aefc0b4><div data-v-1aefc0b4><div id="loader-wrapper" class="loading-wrapper" data-v-d48f4d20 data-v-1aefc0b4 data-v-1aefc0b4><div class="loader-main" data-v-d48f4d20><div data-v-d48f4d20></div><div data-v-d48f4d20></div><div data-v-d48f4d20></div><div data-v-d48f4d20></div></div> <!----> <!----></div> <div class="password-shadow password-wrapper-out" style="display:none;" data-v-25ba6db2 data-v-1aefc0b4 data-v-1aefc0b4><h3 class="title" data-v-25ba6db2 data-v-25ba6db2>速冻鱼blog</h3> <p class="description" data-v-25ba6db2 data-v-25ba6db2>该网站用于记录前端知识总结</p> <label id="box" class="inputBox" data-v-25ba6db2 data-v-25ba6db2><input type="password" value="" data-v-25ba6db2> <span data-v-25ba6db2>Konck! Knock!</span> <button data-v-25ba6db2>OK</button></label> <div class="footer" data-v-25ba6db2 data-v-25ba6db2><span data-v-25ba6db2><i class="iconfont reco-theme" data-v-25ba6db2></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-25ba6db2>vuePress-theme-reco</a></span> <span data-v-25ba6db2><i class="iconfont reco-copyright" data-v-25ba6db2></i> <a data-v-25ba6db2><span data-v-25ba6db2>速冻鱼</span>
+            
+          <span data-v-25ba6db2>2021 - </span>
+          2022
+        </a></span></div></div> <div class="hide" data-v-1aefc0b4><header class="navbar" data-v-1aefc0b4><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/logo.png" alt="速冻鱼blog" class="logo"> <span class="site-name">速冻鱼blog</span></a> <div class="links"><div class="color-picker"><a class="color-button"><i class="iconfont reco-color"></i></a> <div class="color-picker-menu" style="display:none;"><div class="mode-options"><h4 class="title">Choose mode</h4> <ul class="color-mode-options"><li class="dark">dark</li><li class="auto active">auto</li><li class="light">light</li></ul></div></div></div> <div class="search-box"><i class="iconfont reco-search"></i> <input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link"><i class="iconfont reco-home"></i>
+  主页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      Category
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/categories/patterns/" class="nav-link"><i class="undefined"></i>
+  patterns
+</a></li><li class="dropdown-item"><!----> <a href="/categories/cs/" class="nav-link"><i class="undefined"></i>
+  cs
+</a></li><li class="dropdown-item"><!----> <a href="/categories/css/" class="nav-link"><i class="undefined"></i>
+  css
+</a></li><li class="dropdown-item"><!----> <a href="/categories/daily/" class="nav-link"><i class="undefined"></i>
+  daily
+</a></li><li class="dropdown-item"><!----> <a href="/categories/javascript/" class="nav-link"><i class="undefined"></i>
+  javascript
+</a></li><li class="dropdown-item"><!----> <a href="/categories/leetcode/" class="nav-link"><i class="undefined"></i>
+  leetcode
+</a></li><li class="dropdown-item"><!----> <a href="/categories/other/" class="nav-link"><i class="undefined"></i>
+  other
+</a></li><li class="dropdown-item"><!----> <a href="/categories/react/" class="nav-link"><i class="undefined"></i>
+  react
+</a></li><li class="dropdown-item"><!----> <a href="/categories/study/" class="nav-link"><i class="undefined"></i>
+  study
+</a></li><li class="dropdown-item"><!----> <a href="/categories/typescript/" class="nav-link"><i class="undefined"></i>
+  typescript
+</a></li></ul></div></div><div class="nav-item"><a href="/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  Tag
+</a></div><div class="nav-item"><a href="/timeline/" class="nav-link"><i class="iconfont reco-date"></i>
+  时间轴
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-message"></i>
+      关于我
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://github.com/sudongyuer" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-github"></i>
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div> <!----></nav></div></header> <div class="sidebar-mask" data-v-1aefc0b4></div> <aside class="sidebar" data-v-1aefc0b4><div class="personal-info-wrapper" data-v-39576ba9 data-v-1aefc0b4><img src="/longzhu_avatar.jpeg" alt="author-avatar" class="personal-img" data-v-39576ba9> <h3 class="name" data-v-39576ba9>
+    速冻鱼
+  </h3> <div class="num" data-v-39576ba9><div data-v-39576ba9><h3 data-v-39576ba9>66</h3> <h6 data-v-39576ba9>Articles</h6></div> <div data-v-39576ba9><h3 data-v-39576ba9>77</h3> <h6 data-v-39576ba9>Tags</h6></div></div> <ul class="social-links" data-v-39576ba9></ul> <hr data-v-39576ba9></div> <nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link"><i class="iconfont reco-home"></i>
+  主页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      Category
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/categories/patterns/" class="nav-link"><i class="undefined"></i>
+  patterns
+</a></li><li class="dropdown-item"><!----> <a href="/categories/cs/" class="nav-link"><i class="undefined"></i>
+  cs
+</a></li><li class="dropdown-item"><!----> <a href="/categories/css/" class="nav-link"><i class="undefined"></i>
+  css
+</a></li><li class="dropdown-item"><!----> <a href="/categories/daily/" class="nav-link"><i class="undefined"></i>
+  daily
+</a></li><li class="dropdown-item"><!----> <a href="/categories/javascript/" class="nav-link"><i class="undefined"></i>
+  javascript
+</a></li><li class="dropdown-item"><!----> <a href="/categories/leetcode/" class="nav-link"><i class="undefined"></i>
+  leetcode
+</a></li><li class="dropdown-item"><!----> <a href="/categories/other/" class="nav-link"><i class="undefined"></i>
+  other
+</a></li><li class="dropdown-item"><!----> <a href="/categories/react/" class="nav-link"><i class="undefined"></i>
+  react
+</a></li><li class="dropdown-item"><!----> <a href="/categories/study/" class="nav-link"><i class="undefined"></i>
+  study
+</a></li><li class="dropdown-item"><!----> <a href="/categories/typescript/" class="nav-link"><i class="undefined"></i>
+  typescript
+</a></li></ul></div></div><div class="nav-item"><a href="/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  Tag
+</a></div><div class="nav-item"><a href="/timeline/" class="nav-link"><i class="iconfont reco-date"></i>
+  时间轴
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-message"></i>
+      关于我
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://github.com/sudongyuer" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-github"></i>
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div> <!----></nav> <!----> </aside> <div class="password-shadow password-wrapper-in" style="display:none;" data-v-25ba6db2 data-v-1aefc0b4><h3 class="title" data-v-25ba6db2 data-v-25ba6db2>深入理解ES6中class的this指向问题</h3> <!----> <label id="box" class="inputBox" data-v-25ba6db2 data-v-25ba6db2><input type="password" value="" data-v-25ba6db2> <span data-v-25ba6db2>Konck! Knock!</span> <button data-v-25ba6db2>OK</button></label> <div class="footer" data-v-25ba6db2 data-v-25ba6db2><span data-v-25ba6db2><i class="iconfont reco-theme" data-v-25ba6db2></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-25ba6db2>vuePress-theme-reco</a></span> <span data-v-25ba6db2><i class="iconfont reco-copyright" data-v-25ba6db2></i> <a data-v-25ba6db2><span data-v-25ba6db2>速冻鱼</span>
+            
+          <span data-v-25ba6db2>2021 - </span>
+          2022
+        </a></span></div></div> <div data-v-1aefc0b4><main class="page"><section><div class="page-title"><h1 class="title">深入理解ES6中class的this指向问题</h1> <div data-v-f875f3fc><i class="iconfont reco-account" data-v-f875f3fc><span data-v-f875f3fc>速冻鱼</span></i> <i class="iconfont reco-date" data-v-f875f3fc><span data-v-f875f3fc>7/14/2021</span></i> <i class="iconfont reco-eye" data-v-f875f3fc><span id="/blogs/study/ES6-class-this.html" data-flag-title="Your Article Title" class="leancloud-visitors" data-v-f875f3fc><a class="leancloud-visitors-count" style="font-size:.9rem;font-weight:normal;color:#999;"></a></span></i> <i class="tags iconfont reco-tag" data-v-f875f3fc><span class="tag-item" data-v-f875f3fc>ES6</span><span class="tag-item" data-v-f875f3fc>This</span></i></div></div> <div class="theme-reco-content content__default"><blockquote><p>目标：了解到隐式绑定丢失this问题</p></blockquote> <h2 id="深入理解es6中class的this指向问题"><a href="#深入理解es6中class的this指向问题" class="header-anchor">#</a> 深入理解ES6中class的this指向问题</h2> <p>在ES6中引入了类似其他语言的类的写法， 即class（类），作为类对象模板。
+ES6 的class可以看作一个语法糖，它的绝大部分功能ES5 都可以做到，新的class写法只是让对象原型的写法更加清晰、更像面向对象编程的语法而已。</p> <p>同时在JS里面this理解是一个难点和重点，那么在ES6的class中使用this将会如何理解呢？下面就对class中使用this进行剖析。</p> <p>class的基本语法
+欲要理解class里的this，那么我们先就class的基本语法开始入手，其基本语法如下
+class name [extends] { // class body }</p> <p>// 例子：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>&quot;use strict&quot;;
+
+class Demo {
+	constructor(x, y) {
+	this.x = x;
+	this.y = y;
+	}
+	sum() {
+		let sumVal = this.x + this.y;
+		return sumVal;
+	}
+}
+
+let myDemo = new Demo(2, 3);
+console.log(myDemo.sum()); // 打印结果为 5 &lt;== call-site for `sum`
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br></div></div><p>结果解释： 在例子里面，有两处this， 第一处是constructor里的this.x = x和this.y = y。这里的this，在class的构造函数constructor内部，表示的是对象生效时的执行环境。而对象生效的时候，是对象在实例化的过程（myDemo = new Demo(2, 3)）,所以这里的this是指向对象的实例myDemo。
+第二处this是在sum函数里面let sumVal = this.x + this.y，它实际指向的是sum执行时的执行环境，当以myDemo.sum()的方式运行的时候，其实是this的隐式绑定， sum函数里的this实际上是指向的myDemo实例的。所以this能找到x和y，能够得到正确的结果。</p> <p>class中使用this的指向深入理解
+那么我们下面对上面例子进行适当的更改。将对象里面的方法sum作为对象赋值给新变量，然后调用新变量。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>// demo.js
+&quot;use strict&quot;;
+
+class Demo {
+	constructor(x, y) {
+	this.x = x;
+	this.y = y;
+	}
+	sum() {
+		let sumVal = this.x + this.y;
+		return sumVal;
+	}
+}
+
+let myDemo = new Demo(2, 3);
+// console.log(myDemo.sum()); // ===&gt;更改为
+const sum = myDemo.sum; //将sum的引用赋值给新变量sum （// const { sum } = myDemo;）
+sum(); //运行环境是全局环境, 所以class 的sum函数里的this就根据是否是严格模式而指向全局环境或者undefined，【重点注意： ES6 的class内部默认就是严格模式】
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br></div></div><p>执行结果： 当这段代码按照node demo.js执行的时候，会报TypeError: TypeError: Cannot read property 'x' of undefined
+结果解释： 这段代码改变点在于class中sum的调用位置发生了变化。首先将myDemo.sum的引用赋值给新的变量sum，然后再调用该方法sum()。这个理解起来是：class里的sum是一个对象内容，而myDemo.sum只是指向该sum的一个变量，将myDemo.sum等号赋值给新变量sum，只是让新变量指向class的sum，新变量sum和原来的myDemo.sum本身是没有关系的。参看下图所以看起来是对myDmo.sum的引用，但实际上只是对sum本身的引用【调用位置是全局环境】。相当于单独使用class中的sum方法一样**【其实就是隐式绑定丢失问题】**。而这个时候sum函数里的this就根据是否是严格模式而指向全局环境或者undefined(严格模式)【重点注意： ES6 的class内部默认就是严格模式】 所以尽管在全局环境里执行sum()，这里的this 就是undefined，而undefined是没有属性x和y的， 所以找不到该属性而抛出TypeError。</p> <p>解决之法1： 就是在对象每次实例化的时候将sum中的this绑定到每次实例化对象去，所以我们需要在构造函数里添加一条语句this.sum = this.sum.bind(this);实现该功能。constructor改为如下：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>class Demo {
+	constructor(x, y) {
+	this.x = x;
+	this.y = y;
+	this.sum = this.sum.bind(this); // sum中this显式绑定
+	}
+	sum() {
+		let sumVal = this.x + this.y;
+		return sumVal;
+	}
+}
+
+let myDemo = new Demo(2, 3);
+const sum = myDemo.sum; 
+sum(); // &lt;== 5
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br></div></div><p>解释： 当对象实例化的时候let myDemo = new Demo(2, 3);，就将sum的this显示的绑定到实例的this。而单独调用sum函数的时候，相当于是默认绑定，然后默认绑定的优先级小于显示绑定，所以就算单独运行sum，那么class的sum中this还是指向对应的实例化对象了。【参看接下来章节：扩展this理解】</p> <p>解决之法2： ES6里面引入了箭头函数，箭头函数不仅仅是简化了函数的缩写，另外一个很重要的特点就是不会创建自己的this值，他的this值是继承外层作用域链上的this。</p> <p>其实上面的this理解，关键还是在于this的指向，实际是需要看其所在的函数或对象的实际执行时的调用位置，而不是它的代码书写位置。【参看扩展this理解】</p> <p>扩展this理解
+决定this的指向内容，实际是需要看调用位置，而不是它的写入位置。并且我们需要考虑调用顺序：</p> <p>是否是new binding， const bar = new Foo()。
+是否是显示绑定，比如call，apply，亦或者是bind， const bar = foo.call(obj2)。
+是否是隐式绑定，比如函数调用， const bar = obj1.foo()
+最后是默认绑定，在严格模式下，this是undefined，否则是全局对象， 比如：const bar = foo()
+正常函数隐式绑定丢失问题。
+看起来是对obj.foo的引用，但实际上只是对bar本身的引用【调用位置是全局环境】，this就根据是否是严格模式而指向全局环境或者undefined(严格模式)</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>function foo() {
+	console.log( this.a );
+}
+
+var obj = {
+	a: 2,
+	foo: foo
+};
+
+var bar = obj.foo; // function reference/alias!
+
+var a = &quot;oops, global&quot;; // `a` also property on global object
+
+bar(); // &quot;oops, global&quot;
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br></div></div><p>函数作为回调参数传递也有类似问题。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>function foo() {
+	console.log( this.a );
+}
+
+function doFoo(fn) {
+	// `fn` is just another reference to `foo`
+
+	fn(); // &lt;-- call-site!
+}
+
+var obj = {
+	a: 2,
+	foo: foo
+};
+
+var a = &quot;oops, global&quot;; // `a` also property on global object
+
+doFoo( obj.foo ); // &quot;oops, global&quot;
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br></div></div><p>定时函数执行也存在相同问题</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>function foo() {
+	console.log( this.a );
+}
+
+var obj = {
+	a: 2,
+	foo: foo
+};
+
+var a = &quot;oops, global&quot;; // `a` also property on global object
+
+setTimeout( obj.foo, 100 ); // &quot;oops, global&quot;
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br></div></div><p>隐式绑定丢失问题参看：<a href="https://github.com/changpzh/You-Dont-Know-JS/blob/master/this%20&amp;%20object%20prototypes/ch2.md" target="_blank" rel="noopener noreferrer">你不知道的JS-Implicitly Lost章节<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></p></div></section> <footer class="page-edit"><!----> <div class="last-updated"><span class="prefix">Last Updated: </span> <span class="time">7/18/2021, 10:47:52 PM</span></div></footer> <!----> <div class="comments-wrapper"><!----></div> <ul class="side-bar sub-sidebar-wrapper" style="width:12rem;" data-v-cb1513f6><li class="level-2" data-v-cb1513f6><a href="/blogs/study/ES6-class-this.html#深入理解es6中class的this指向问题" class="sidebar-link reco-side-深入理解es6中class的this指向问题" data-v-cb1513f6>深入理解ES6中class的this指向问题</a></li></ul></main> <!----></div></div></div></div><div class="global-ui"><div class="back-to-ceiling" style="right:1rem;bottom:6rem;width:2.5rem;height:2.5rem;border-radius:.25rem;line-height:2.5rem;display:none;" data-v-c6073ba8 data-v-c6073ba8><svg t="1574745035067" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5404" class="icon" data-v-c6073ba8><path d="M526.60727968 10.90185116a27.675 27.675 0 0 0-29.21455937 0c-131.36607665 82.28402758-218.69155461 228.01873535-218.69155402 394.07834331a462.20625001 462.20625001 0 0 0 5.36959153 69.94390903c1.00431239 6.55289093-0.34802892 13.13561351-3.76865779 18.80351572-32.63518765 54.11355614-51.75690182 118.55860487-51.7569018 187.94566865a371.06718723 371.06718723 0 0 0 11.50484808 91.98906777c6.53300375 25.50556257 41.68394495 28.14064038 52.69160883 4.22606766 17.37162448-37.73630017 42.14135425-72.50938081 72.80769204-103.21549295 2.18761121 3.04276886 4.15646224 6.24463696 6.40373557 9.22774369a1871.4375 1871.4375 0 0 0 140.04691725 5.34970492 1866.36093723 1866.36093723 0 0 0 140.04691723-5.34970492c2.24727335-2.98310674 4.21612437-6.18497483 6.3937923-9.2178004 30.66633723 30.70611158 55.4360664 65.4791928 72.80769147 103.21549355 11.00766384 23.91457269 46.15860503 21.27949489 52.69160879-4.22606768a371.15156223 371.15156223 0 0 0 11.514792-91.99901164c0-69.36717486-19.13165746-133.82216804-51.75690182-187.92578088-3.42062944-5.66790279-4.76302748-12.26056868-3.76865837-18.80351632a462.20625001 462.20625001 0 0 0 5.36959269-69.943909c-0.00994388-166.08943902-87.32547796-311.81420293-218.6915546-394.09823051zM605.93803103 357.87693858a93.93749974 93.93749974 0 1 1-187.89594924 6.1e-7 93.93749974 93.93749974 0 0 1 187.89594924-6.1e-7z" p-id="5405" data-v-c6073ba8></path><path d="M429.50777625 765.63860547C429.50777625 803.39355007 466.44236686 1000.39046097 512.00932183 1000.39046097c45.56695499 0 82.4922232-197.00623328 82.5015456-234.7518555 0-37.75494459-36.9345906-68.35043303-82.4922232-68.34111062-45.57627738-0.00932239-82.52019037 30.59548842-82.51086798 68.34111062z" p-id="5406" data-v-c6073ba8></path></svg></div></div></div>
+    <script src="/assets/js/app.447fc903.js" defer></script><script src="/assets/js/3.f7c4414f.js" defer></script><script src="/assets/js/1.9beddc46.js" defer></script><script src="/assets/js/59.96197158.js" defer></script>
+  </body>
+</html>
